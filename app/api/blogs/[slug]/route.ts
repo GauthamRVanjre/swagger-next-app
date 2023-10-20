@@ -29,6 +29,62 @@ export const GET = async (
   }
 };
 
+/**
+ * @swagger
+ * /api/blogs/{id}:
+ *   put:
+ *     summary: Update a blog by id
+ *     tags:
+ *       - blogs
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the blog to delete
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *      description: Blog post data to update.
+ *      content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: The updated title of the blog post.
+ *               body:
+ *                 type: string
+ *                 description: The updated body of the blog post.
+ *     responses:
+ *       200:
+ *         description: blog updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: blog not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
 export async function PUT(
   request: Request,
   { params }: { params: { slug: string } }
@@ -57,6 +113,49 @@ export async function PUT(
   }
 }
 
+/**
+ * @swagger
+ * /api/blogs/{id}:
+ *   delete:
+ *     summary: Delete a blog by id
+ *     tags:
+ *       - blogs
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the blog to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: blog deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: blog not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
 export const DELETE = async (
   request: Request,
   { params }: { params: { slug: string } }
