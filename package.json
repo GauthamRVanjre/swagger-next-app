@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.4.2",
     "next": "13.5.6",
     "next-swagger-doc": "^0.4.0",
     "prisma": "^5.4.2",
