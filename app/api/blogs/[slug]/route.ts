@@ -36,6 +36,8 @@ export const GET = async (
  *     summary: Update a blog by id
  *     tags:
  *       - blogs
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -66,6 +68,8 @@ export const GET = async (
  *               properties:
  *                 message:
  *                   type: string
+ *       401:
+ *         description: Unauthorized - Bearer token missing or incorrect
  *       404:
  *         description: blog not found
  *         content:
@@ -84,6 +88,13 @@ export const GET = async (
  *               properties:
  *                 message:
  *                   type: string
+ *
+ * securityDefinitions:
+ *   BearerAuth:
+ *     type: apiKey
+ *     name: Authorization
+ *     in: header
+ *     description: Enter a Bearer token in the format 'Bearer <token>'
  */
 export async function PUT(
   request: Request,
@@ -120,6 +131,8 @@ export async function PUT(
  *     summary: Delete a blog by id
  *     tags:
  *       - blogs
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -137,6 +150,8 @@ export async function PUT(
  *               properties:
  *                 message:
  *                   type: string
+ *       401:
+ *         description: Unauthorized - Bearer token missing or incorrect
  *       404:
  *         description: blog not found
  *         content:
@@ -155,6 +170,12 @@ export async function PUT(
  *               properties:
  *                 message:
  *                   type: string
+ * securityDefinitions:
+ *   BearerAuth:
+ *     type: apiKey
+ *     name: Authorization
+ *     in: header
+ *     description: Enter a Bearer token in the format 'Bearer <token>'
  */
 export const DELETE = async (
   request: Request,

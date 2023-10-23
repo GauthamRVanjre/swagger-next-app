@@ -4,24 +4,41 @@ type requestBody = {
   body: string;
   title: string;
 };
+
 /**
  * @swagger
  * /api/blogs:
- *  get:
- *
- *   summary: Returns blogs present in posts collection
- *   tags:
+ *   get:
+ *     summary: Returns blogs present in posts collection
+ *     tags:
  *       - blogs
- *
- *   responses:
- *     200:
- *       description: returns a blog post
- *     500:
- *       description: returns a error message
- *
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Returns a list of blog posts
+ *       401:
+ *         description: Unauthorized - Bearer token missing or incorrect
+ *       500:
+ *         description: Internal Server Error - Something went wrong
+ * securityDefinitions:
+ *   BearerAuth:
+ *     type: apiKey
+ *     name: Authorization
+ *     in: header
+ *     description: Enter a Bearer token in the format 'Bearer <token>'
  */
+
 export const GET = async (req: Request, res: Response) => {
   try {
+    const token = req.headers.get("Authorization");
+    console.log(token);
+    if (!token || !token.startsWith("Bearer ")) {
+      return new Response(JSON.stringify({ message: "Unauthorized" }), {
+        status: 401,
+      });
+    }
+
     await prisma.$connect();
     const blogs = await prisma.post.findMany();
 
@@ -42,6 +59,8 @@ export const GET = async (req: Request, res: Response) => {
  *     summary: Create a new blog
  *     tags:
  *       - blogs
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       body: New todo object
  *       required: true
@@ -66,6 +85,8 @@ export const GET = async (req: Request, res: Response) => {
  *                   type: string
  *                 body:
  *                   type: string
+ *       401:
+ *         description: Unauthorized - Bearer token missing or incorrect
 
  *       500:
  *         description: Internal server error
@@ -76,11 +97,26 @@ export const GET = async (req: Request, res: Response) => {
  *               properties:
  *                 message:
  *                   type: string
+ * securityDefinitions:
+ *   BearerAuth:
+ *     type: apiKey
+ *     name: Authorization
+ *     in: header
+ *     description: Enter a Bearer token in the format 'Bearer <token>'
  */
+
 export const POST = async (req: Request, res: Response) => {
   const requestBody: requestBody = await req.json();
 
   try {
+    const token = req.headers.get("Authorization");
+    console.log(token);
+    if (!token || !token.startsWith("Bearer ")) {
+      return new Response(JSON.stringify({ message: "Unauthorized" }), {
+        status: 401,
+      });
+    }
+
     await prisma.$connect();
     const createPost = await prisma.post.create({
       data: {
